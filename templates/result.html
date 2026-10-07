@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result | Predictive Maintenance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/home" class="nav-logo">
+                <i class="fas fa-truck-pickup"></i> <span>Maintenance ML</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/home" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/graphs" class="nav-link"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                <li><a href="../static/Notebook.html" class="nav-link"><i class="fas fa-file-code"></i> Notebook</a>
+                </li>
+                <li><a href="/" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="home-hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Prediction Analysis Complete</h1>
+            <p class="hero-subtitle">Machine Learning Diagnostic Results</p>
+            <p class="hero-description">
+                Advanced sensor telemetry analysis with confidence scoring and explainable AI insights
+            </p>
+        </div>
+    </section><br>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+
+
+        <div class="diagnostic-card js-fade">
+            <div class="form-header">
+                <h2>Prediction Results</h2>
+                <p>Machine Learning Analysis Complete</p>
+            </div>
+
+            <div class="result-display">
+                <div class="result-icon-container">
+                    {% if classification_result == "Failure" %}
+                    <i class="fas fa-exclamation-triangle status-failure"></i>
+                    {% else %}
+                    <i class="fas fa-check-circle status-success"></i>
+                    {% endif %}
+                </div>
+
+                <h3
+                    class="result-status {% if classification_result == 'Failure' %}status-failure{% else %}status-success{% endif %}">
+                    {{ classification_result }}
+                </h3>
+
+                <p class="result-description">Model prediction based on sensor telemetry analysis</p>
+
+                <div class="confidence-box">
+                    <div class="confidence-label">Confidence Score</div>
+                    <div class="confidence-value">{{ confidence_score }}</div>
+                </div>
+
+                {% if lime_html %}
+                <div class="lime-section js-fade">
+                    <div class="lime-plot-box">
+                        <h4><i class="fas fa-chart-line"></i> LIME Feature Explanation</h4>
+                        <div class="lime-html-container">
+                            {{ lime_html|safe }}
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="lime-section js-fade">
+                    <div class="lime-box">
+                        <h4><i class="fas fa-exclamation-circle"></i> Feature Importance (LIME)</h4>
+                        <div class="lime-value">LIME analysis unavailable</div>
+                    </div>
+                </div>
+                {% endif %}
+
+
+                <div class="action-btn-container">
+                    <a href="/home" class="cta-button">
+                        <i class="fas fa-redo"></i> New Test
+                    </a>
+                    <a href="/graphs" class="cta-button secondary">
+                        <i class="fas fa-chart-bar"></i> Analytics
+                    </a>
+                </div>
+            </div>
+        </div><br><br>
+
+        <!-- LIME Explanation Section -->
+
+        <!-- Suggestions and Recommendations Section -->
+        <div class="recommendations-section js-fade">
+            <div class="diagnostic-card">
+                {% if classification_result == "Failure" %}
+                <div class="form-header">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Predictive Maintenance Alert</h2>
+                    <p>Vehicle sensor patterns indicate a high risk of component failure</p>
+                </div>
+
+                <div class="recommendation-list">
+                    <div class="recommendation-item urgent">
+                        <i class="fas fa-tools"></i>
+                        <div class="recommendation-content">
+                            <h5>Immediate Technical Inspection</h5>
+                            <p>The predictive model has detected abnormal sensor behavior associated with potential
+                                mechanical failure. Schedule a detailed inspection of the vehicle immediately. Pay
+                                special attention to components related to abnormal sensor readings such as engine
+                                systems, drivetrain components, and vibration-sensitive parts.</p>
+                            <div class="recommendation-meta">
+                                <span class="priority-badge urgent">Priority: Critical</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recommendation-item high">
+                        <i class="fas fa-wrench"></i>
+                        <div class="recommendation-content">
+                            <h5>Preventive Component Maintenance</h5>
+                            <p>Based on predictive analytics, this vehicle may experience a component failure in the
+                                near future. Prepare for preventive maintenance by reviewing recent operational data
+                                and checking components commonly associated with sensor deviations. Replacing or
+                                servicing worn components early can prevent unexpected breakdowns.</p>
+                            <div class="recommendation-meta">
+                                <span class="priority-badge high">Priority: High</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recommendation-item medium">
+                        <i class="fas fa-clipboard-check"></i>
+                        <div class="recommendation-content">
+                            <h5>Increase Sensor Monitoring Frequency</h5>
+                            <p>Until maintenance is completed, increase the monitoring frequency of vehicle sensor
+                                data. Track trends in key operational parameters to detect rapid degradation.
+                                Continuous monitoring helps confirm whether the detected pattern is progressing
+                                toward failure.</p>
+                            <div class="recommendation-meta">
+                                <span class="priority-badge medium">Priority: Medium</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% else %}
+                <div class="form-header">
+                    <h2><i class="fas fa-check-circle"></i> Vehicle Operating Normally</h2>
+                    <p>No failure risk detected based on current sensor behavior</p>
+                </div>
+
+                <div class="recommendation-list">
+                    <div class="recommendation-item normal">
+                        <i class="fas fa-calendar-check"></i>
+                        <div class="recommendation-content">
+                            <h5>Continue Scheduled Maintenance</h5>
+                            <p>The predictive maintenance model indicates that the vehicle is operating within
+                                normal conditions. Continue with standard maintenance schedules recommended by
+                                the manufacturer to ensure consistent performance and reliability.</p>
+                            <div class="recommendation-meta">
+                                <span class="priority-badge normal">Priority: Routine</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recommendation-item normal">
+                        <i class="fas fa-chart-line"></i>
+                        <div class="recommendation-content">
+                            <h5>Maintain Regular Sensor Monitoring</h5>
+                            <p>Continue monitoring operational sensor data as part of routine fleet management.
+                                Periodically review sensor trends to detect early signs of degradation so that
+                                predictive maintenance actions can be taken before failures occur.</p>
+                            <div class="recommendation-meta">
+                                <span class="priority-badge normal">Priority: Routine</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recommendation-item low">
+                        <i class="fas fa-lightbulb"></i>
+                        <div class="recommendation-content">
+                            <h5>Optimize Vehicle Performance</h5>
+                            <p>Since the vehicle is currently healthy, use this opportunity to optimize operational
+                                performance. Review driving patterns, load conditions, and maintenance logs to
+                                improve efficiency and extend component lifespan.</p>
+                            <div class="recommendation-meta">
+                                <span class="priority-badge low">Priority: Optional</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p> 2026 · predictive maintenance solutions · all rights reserved · data privacy · imprint</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add fade-in animation
+        document.addEventListener('DOMContentLoaded', function () {
+            const fadeElements = document.querySelectorAll('.js-fade');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+        // Add hover effects for buttons
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-4px)';
+            });
+
+            button.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Diagnostics | Maintenance ML</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <i class="fas fa-truck-pickup"></i> <span>Maintenance ML</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/home" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/graphs" class="nav-link"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                <li><a href="../static/Notebook.html" class="nav-link"><i class="fas fa-file-code"></i> Notebook</a>
+                </li>
+                <li><a href="/" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="home-hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Vehicle Diagnostic Center</h1>
+            <p class="hero-subtitle">High-fidelity sensor telemetry analysis</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="diagnostic-card js-fade">
+            <div class="form-header">
+                <h2>Sensor Input Array</h2>
+                <p>Provide the standard deviation values for the following telemetry points</p>
+            </div>
+
+            <form action="/predict" method="POST" class="diagnostic-form">
+                <div class="sensor-grid">
+                    {% for sensor in ['1', '7', '17', '4', '14', '19', '13', '18', '3', '16', '6', '8', '12', '11',
+                    '21', '20', '15', '9', '5', '10'] %}
+                    <div class="sensor-input-group">
+                        <label class="sensor-label" for="sensor_{{ sensor }}_std">
+                            <i class="fas fa-microchip"></i> Sensor {{ sensor }}
+                        </label>
+                        <div class="sensor-input-wrapper">
+                            <input type="number" step="any" id="sensor_{{ sensor }}_std" name="sensor_{{ sensor }}_std"
+                                required placeholder="0.0000">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="predict-btn-container">
+                    <button type="submit" class="predict-btn">
+                        <i class="fas fa-brain"></i> Execute ML Prediction
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>© 2026 · predictive maintenance solutions · all rights reserved · data privacy · imprint</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% if scroll_to_form %}
+    <script>
+        document.querySelector('.diagnostic-card').scrollIntoView({ behavior: 'smooth' });
+    </script>
+    {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+Dataset Link : https://www.kaggle.com/datasets/ayyappanmarimuthu/heavy-vehicle-maintenance-data
+
+1. Importing the packages
+
+2. Exploring the dataset
+	- load predictive_maintenance_dataset Datasets
+
+3. Data Preprocessing
+	- Handle Missing vlaues using SimpleImputer
+
+4. Feature Engineering
+	- Statistical Aggregation
+
+5. Data Visulization
+	- Distribution of Classification outcome
+	- Correlation Matrix
+
+6. Feature Encoding
+	- Label Encoding
+
+7. Train and Test split
+
+8. Handling Class Imbalance
+	- SMOTE
+
+9. Build the Classification models
+
+	- ML Models
+			- RandomForest	
+			- DecisionTree
+			- GradientBoosting	
+			- LogisticRegression
+			- XGBoost
+			- Voting Classifier(RF, XGB, LGBM, LR)	
+
+		
+10. Training the model
+11. Comparing the models with accuracy, precision, recall, f1 score, FP, FN, Total Cost.
+12. Comparison Graphs and confusion matrix are generated with scores of all models.
+13. Save the best trained model
+14. Explainable AI (XAI) Visualizations
+	- Using LIME and SHAP
+
+
+Front-end:
+==========
+1. Frontend is developed with help of Flask Framework, along with Registration and Login setup with support of SQLite DB 
+2. The frontend collects user input for prediction.
+3. User enters vehicle sensor feature values. 
+4. Apply the same preprocessing steps used during training.
+5. Load the trained model and predict failure probability. 
+6. Final outcome is displayed through frontend.
+
