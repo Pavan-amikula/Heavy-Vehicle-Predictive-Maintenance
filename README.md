@@ -6,6 +6,14 @@
 
 An academic machine learning project that compares individual classifiers with a five-model soft-voting ensemble. A Flask interface accepts sensor statistics and displays failure predictions, probabilities, and LIME explanations.
 
+## Project report and problem-solving context
+
+[Read the predictive-maintenance report](docs/reports/predictive-maintenance-report.pdf), coauthored by **Pavan Kumar Goud Amikula** and **Naga Sreerama Pradyumna Tata** at Blekinge Institute of Technology.
+
+The problem is to classify rare potential failures from sensor features while understanding the cost of missed failures. The report discusses cleaning and aggregation, imbalance handling with SMOTE, comparisons between models, ensemble learning, error-based costs, explainability, and a Flask interface. It establishes coauthorship but does not assign individual implementation tasks.
+
+The report states a 98.5% result for its voting classifier. That is a reported historical experiment, not a newly reproduced result or proof of real-fleet performance. The implementation's synthetic-data scope and explanation caveats below remain important.
+
 ## Pipeline
 
 Synthetic telemetry → vehicle-level feature aggregation → train/test split → feature selection → SMOTE on training data → model comparison → soft voting → Flask + LIME.
